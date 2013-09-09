@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>PageSpeed Insights Monitor</title>
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <script src="UrlController.js"></script>
+    <style>
+      html { height: 100%; overflow: hidden;}
+      body { height: 100%; }
+      form { padding: 10px; box-shadow: 0px 0px 5px #999; background-color: white;}
+      #urls { display: -webkit-flex; flex-direction: column; height: 100%;  }
+      #container { overflow: scroll; flex: 1 1 200px; height: 100%; flex-grow: 1; }
+      table { height: 300px; max-height: 300px; overflow: scroll; }
+      form { flex: 1 1 150px; max-height: 250px; min-height: 250px; }
+      h2 { margin-top: 0px; }
+    </style>
+</head>
+<body>
+<h2>PageSpeed Mobile Insights Monitor</h2>
+<div id=urls>
+  <div id="container">
+  <table class="table table-striped"> 
+    <thead>
+    <tr>
+      <th>URL</th>
+      <th>Last Checked</th>
+      <th>PageSpeed Score</th>
+      <th><!-- Controls --></th>
+    </tr>
+    </thead>
+    <tbody id="urllist" >
+    </tbody>
+  </table>
+  </div>
+  <form>
+    <div class="form-group">
+      <label for=newUrl>URL to monitor</label>
+      <input type="url" class="form-control" id=newUrl>
+      <span class="help-block">The url that you want to monitor.  The app will check the website every 10 minutes.</span>
+    </div>
+    <button class="btn btn-primary" id=add>Add Url</button>
+  </form>
+</div>
+</body>
+</html>
