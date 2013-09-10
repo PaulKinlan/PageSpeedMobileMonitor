@@ -23,7 +23,7 @@
     function buildUrl(url) {
       var fetchUrl = "https://www.googleapis.com/pagespeedonline/v1/runPagespeed";
       var parameters = {
-        key: "AIzaSyDGyUTorf9U60Md_ivRQi7bNlIPugQ3dls",
+        key: "AIzaSyBdyrTIOcz9X5KHj5utziotD0W_2SCoroU",
         strategy: "mobile",
         screenshot: "true",
         rule: ["AvoidLandingPageRedirects", "ServerResponseTime" , "MinimizeRenderBlockingResources", "PrioritizeVisibleContent", "EnableGzipCompression", "InlineRenderBlockingCss", "PreferAsyncResources"],
@@ -79,18 +79,26 @@
     this.addUrl = function(url) {
       var row = urlList.insertRow(-1);
       var urlCell = row.insertCell(0);
-      var lastCheckedCell = row.insertCell(1);
-      var scoreCell = row.insertCell(2);
-      var controlsCell = row.insertCell(3);
-    
+      var scoreCell = row.insertCell(1);
+      var controlsCell = row.insertCell(2);
+      var lastChecked = document.createElement("span"); 
+      var score = document.createElement("span");
       row.id = urlToId(url);
 
-      scoreCell.className = "score";
+      score.className = "score";
+      scoreCell.className = "scorecell";
       urlCell.className = "url";
       controlsCell.className = "controls";
-      lastCheckedCell.className = "lastChecked";
+      lastChecked.className = "lastChecked";
+
+      scoreCell.appendChild(score)
  
-      urlCell.textContent = url;
+      var urlAnchor = document.createElement("a");
+      urlAnchor.href = "https://developers.google.com/speed/pagespeed/insights/?url=" + encodeURIComponent(url);
+      urlAnchor.target = "_blank";
+      urlAnchor.textContent = url;
+      urlCell.appendChild(urlAnchor);
+      urlCell.appendChild(lastChecked)
 
       var removeButton = document.createElement("a");
       removeButton.textContent = "x"
@@ -108,7 +116,10 @@
       var row = urlList.querySelector("#" + urlToId(url));
       var scoreCell = row.querySelector(".score");
       var lastCheckedCell = row.querySelector(".lastChecked");
-  
+      var scoreType = (score > 85) ? "good" : (score > 50) ? "warning" : "poor"; 
+ 
+      scoreCell.dataset["score"] = score; 
+      scoreCell.classList.add(scoreType);
       scoreCell.textContent = score;
       lastCheckedCell.textContent = new Date();
     };
@@ -158,7 +169,7 @@
 
     var addUrl = function(url) {
       var callback = function() {
-        chrome.alarms.create(url, {periodInMinutes: 1})
+        chrome.alarms.create(url, {periodInMinutes: 60})
         view.addUrl(url);
       };
     

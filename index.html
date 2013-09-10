@@ -8,24 +8,37 @@
     <style>
       html { height: 100%; overflow: hidden;}
       body { height: 100%; }
-      form { padding: 10px; box-shadow: 0px 0px 5px #999; background-color: white;}
+      form { padding: 10px; box-shadow: 0px 0px 5px #aaa; background-color: white;}
       #urls { display: -webkit-flex; flex-direction: column; height: 100%;  }
       #container { overflow: scroll; flex: 1 1 200px; height: 100%; flex-grow: 1; }
-      table { height: 300px; max-height: 300px; overflow: scroll; }
-      form { flex: 1 1 150px; max-height: 250px; min-height: 250px; }
+      table { }
+      form { flex: 1 1 150px; max-height: 100px; min-height: 100px; background-color: #2d2d2d; color: white; }
+      form .help-block { color: #c2c2c2;}
       h2 { margin-top: 0px; }
+      .controls {
+        visibility: hidden;
+      }
+ 
+      tr:hover .controls {
+        visibility: visible;
+      }
+      .scorecell { text-align: center; }
+      .lastChecked { clear: both; display: block; font-weight: 200;} 
+      .controls a { cursor: pointer; }
+      .score { padding: 5px; border-radius: 20px; }
+      .score.good { background-color: green; color: white; }
+      .score.warning { background-color: amber; color: white; }
+      .score.poor { background-color: red; color: white; }
     </style>
 </head>
 <body>
-<h2>PageSpeed Mobile Insights Monitor</h2>
 <div id=urls>
   <div id="container">
-  <table class="table table-striped"> 
+  <table class="table"> 
     <thead>
     <tr>
-      <th>URL</th>
-      <th>Last Checked</th>
-      <th>PageSpeed Score</th>
+      <th></th>
+      <th>Score</th>
       <th><!-- Controls --></th>
     </tr>
     </thead>
@@ -35,11 +48,9 @@
   </div>
   <form>
     <div class="form-group">
-      <label for=newUrl>URL to monitor</label>
-      <input type="url" class="form-control" id=newUrl>
-      <span class="help-block">The url that you want to monitor.  The app will check the website every 10 minutes.</span>
+      <input type="url" class="form-control" id=newUrl placeholder="Url to monitor">
     </div>
-    <button class="btn btn-primary" id=add>Add Url</button>
+    <button class="btn btn-primary" id=add>Add</button>
   </form>
 </div>
 </body>
