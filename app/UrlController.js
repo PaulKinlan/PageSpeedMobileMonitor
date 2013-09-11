@@ -3,7 +3,6 @@
     return btoa(url).replace(/=/g, "").replace(/\+/g, "");
   };
 
-
   var PageSpeedInsightsAPI = function(apiKey) {
     function serialize(obj) {
       var str = [];
@@ -83,13 +82,18 @@
     addElement.onclick = evtAddUrl;
 
     this.addUrl = function(url) {
+      var id = urlToId(url);
+      console.log("Adding", url, document.getElementById(id), id)
+    
+      if(!!document.getElementById(id)) return;
+
       var row = urlList.insertRow(-1);
       var urlCell = row.insertCell(0);
       var scoreCell = row.insertCell(1);
       var controlsCell = row.insertCell(2);
       var lastChecked = document.createElement("span"); 
       var score = document.createElement("span");
-      row.id = urlToId(url);
+      row.id = id;
 
       score.className = "score";
       scoreCell.className = "scorecell";
@@ -115,7 +119,7 @@
 
     this.removeUrl = function(url) {
       var row = urlList.querySelector("#" + urlToId(url));
-      row.parentElement.removeChild(row);
+      if(row) row.parentElement.removeChild(row);
     }
 
     this.updateUrl = function(url, score) {
@@ -169,6 +173,16 @@
         }
       });
 
+      storage.onUpdate = function(newUrls, oldUrls) {
+        for(var url in newUrls) {
+          view.addUrl(url);
+        }
+
+        for(var url in oldUrls) {
+          view.removeUrl(url);
+        }
+      };
+
       // this ties this controller to Chrome.
       chrome.alarms.onAlarm.addListener(onPeriod);
     };
@@ -204,6 +218,26 @@
  
   var ChromeAppStorage = function() {
     this.setApiKey = function(apiKey, callback) {};
+    
+    chrome.storage.onChanged.addListener(function(keys, area) {
+      if(!!this.onUpdate && area == "sync" && !!keys.urls) {
+        // we should do a diff here.
+        var added = {}, removed = {};
+        for(var url in keys.urls.newValue) {
+          if((url in keys.urls.oldValue) == false) {
+            added[url] = 1;
+          }
+        }
+
+        for(var url in keys.urls.oldValue) {
+          if((url in keys.urls.newValue) == false) {
+            removed[url] = 1;
+          } 
+        }
+
+        this.onUpdate(added, removed);
+      }
+    }.bind(this));
  
     this.getAllUrls = function(callback) {
       chrome.storage.sync.get("urls", function(keys) {
