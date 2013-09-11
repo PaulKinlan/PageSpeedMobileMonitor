@@ -58,9 +58,15 @@
   
   var UrlView = function(root) {
     var rootElement = document.getElementById(root);
+    var urlForm = rootElement.querySelector("#urlform");
     var addElement = rootElement.querySelector("#add");
     var newUrlElement = rootElement.querySelector("#newUrl");
     var urlList = rootElement.querySelector("#urllist");
+
+    urlform.onsubmit = function(e) { 
+      e.preventDefault();
+      return false;
+    }
 
     var evtAddUrl = function(e) {
       if(this.onAddUrl) {
@@ -116,10 +122,10 @@
       var row = urlList.querySelector("#" + urlToId(url));
       var scoreCell = row.querySelector(".score");
       var lastCheckedCell = row.querySelector(".lastChecked");
-      var scoreType = (score > 85) ? "good" : (score > 50) ? "warning" : "poor"; 
+      var scoreType = (score > 85) ? "good" : (score > 50) ? "warn" : "poor"; 
  
       scoreCell.dataset["score"] = score; 
-      scoreCell.classList.add(scoreType);
+      row.classList.add(scoreType);
       scoreCell.textContent = score;
       lastCheckedCell.textContent = new Date();
     };

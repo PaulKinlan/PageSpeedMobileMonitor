@@ -12,41 +12,34 @@
       #urls { display: -webkit-flex; flex-direction: column; height: 100%;  }
       #container { overflow: scroll; flex: 1 1 200px; height: 100%; flex-grow: 1; }
       table { }
+      td { border-top: none !important; }
       form { flex: 1 1 150px; max-height: 100px; min-height: 100px; background-color: #2d2d2d; color: white; }
       form .help-block { color: #c2c2c2;}
       h2 { margin-top: 0px; }
-      .controls {
-        visibility: hidden;
-      }
- 
-      tr:hover .controls {
-        visibility: visible;
-      }
       .scorecell { text-align: center; }
       .lastChecked { clear: both; display: block; font-weight: 200;} 
       .controls a { cursor: pointer; }
-      .score { padding: 5px; border-radius: 20px; }
-      .score.good { background-color: green; color: white; }
-      .score.warning { background-color: amber; color: white; }
-      .score.poor { background-color: red; color: white; }
+      .score { padding: 5px; border-radius: 20px; background-color: white; color: black; }
+      .good { background-color: #4cd964; color: white; }
+      .good .score { color: #4cd964; }
+      .good a { color: white; }
+      .warn { background-color: #ff9500; color: white; }
+      .warn .score { color: #ff9500; }
+      .warn a { color: white }
+      .poor { background-color: #FF3443; color: white; }
+      .poor .score { color: #FF3443; }
+      .poor a { color: white; }
     </style>
 </head>
 <body>
 <div id=urls>
   <div id="container">
   <table class="table"> 
-    <thead>
-    <tr>
-      <th></th>
-      <th>Score</th>
-      <th><!-- Controls --></th>
-    </tr>
-    </thead>
     <tbody id="urllist" >
     </tbody>
   </table>
   </div>
-  <form>
+  <form id="urlform">
     <div class="form-group">
       <input type="url" class="form-control" id=newUrl placeholder="Url to monitor">
     </div>
