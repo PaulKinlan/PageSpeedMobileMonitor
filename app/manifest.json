@@ -1,11 +1,12 @@
 {
   "manifest_version": 2,
-  "name": "PageSpeed Insights Monitor",
-  "version": "1",
+  "name": "Mobile Insights Monitor",
+  "description": "Continiously track your sites and pages to ensure that the are always mobile friendly",
+  "version": "2013.8.11.0",
   "minimum_chrome_version": "23",
   "icons": {
-    "16": "icon_16.png",
-    "128": "icon_128.png"
+    "128": "images/128.png",
+    "256": "images/256.png"
   },
   "app": {
     "background": {

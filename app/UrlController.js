@@ -175,7 +175,7 @@
 
     var addUrl = function(url) {
       var callback = function() {
-        chrome.alarms.create(url, {periodInMinutes: 60})
+        chrome.alarms.create(url, {periodInMinutes: 1})
         view.addUrl(url);
       };
     
